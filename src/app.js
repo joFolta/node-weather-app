@@ -1,27 +1,3 @@
-// const request = require("request");
-
-// // Command line arguement (e.g. node app Boston)
-// const address = process.argv[2];
-
-// if (!address) {
-//   console.log("Please provide address");
-// } else {
-//   geocode(address, (error, data) => {
-//     if (error) {
-//       return console.log(error);
-//     }
-
-//     forecast(data.latitude, data.longitude, (error, forecastData) => {
-//       if (error) {
-//         return console.log(error);
-//       }
-
-//       console.log(data.location);
-//       console.log(forecastData);
-//     });
-//   });
-// }
-
 const path = require("path");
 const express = require("express");
 const hbs = require("hbs");
@@ -72,30 +48,34 @@ app.get("/weather", (req, res) => {
     });
   }
 
-  geocode(req.query.address, (error, { latitude, longitude, location }) => {
-    if (error) {
-      return res.send({ error });
-    }
-
-    forecast(
-      latitude,
-      longitude,
-      (error, { description, temp, wind, rain }) => {
-        if (error) {
-          return res.send({ error });
-        }
-
-        res.send({
-          description,
-          temp,
-          wind,
-          rain,
-          location,
-          address: req.query.address,
-        });
+  geocode(
+    req.query.address,
+    (error, { latitude, longitude, location } = {}) => {
+      if (error) {
+        return res.send({ error });
       }
-    );
-  });
+
+      forecast(
+        latitude,
+        longitude,
+        (error, { description, icon, temp, wind, rain }) => {
+          if (error) {
+            return res.send({ error });
+          }
+
+          res.send({
+            description,
+            icon,
+            temp,
+            wind,
+            rain,
+            location,
+            address: req.query.address,
+          });
+        }
+      );
+    }
+  );
 });
 
 app.get("/products", (req, res) => {
