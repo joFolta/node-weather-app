@@ -1,32 +1,44 @@
 const request = require("request");
+const geocode = require("./utils/geocode");
+const forecast = require("./utils/forecast");
 
 // Weather
-const url =
-  "http://api.weatherstack.com/current?access_key=79e93368ece76c99d0d3b786b317e05a&query=Boston&units=f";
+// const url =
+//   "http://api.weatherstack.com/current?access_key=79e93368ece76c99d0d3b786b317e05a&query=Boston&units=f";
 
-request({ url: url, json: true }, (error, response) => {
-  if (error) {
-    console.log("Unable to connect to weather service!");
-  } else if (response.body.error) {
-    console.log("Unable to find location");
-  } else {
-    console.log(
-      `It is currently ${response.body.current.temperature} F. It feels like ${response.body.current.feelslike} F. `
-    );
-  }
-});
+// request({ url: url, json: true }, (error, response) => {
+//   if (error) {
+//     console.log("Unable to connect to weather service!");
+//   } else if (response.body.error) {
+//     console.log("Unable to find location");
+//   } else {
+//     console.log(
+//       `It is currently ${response.body.current.temperature} F. It feels like ${response.body.current.feelslike} F. `
+//     );
+//   }
+// });
 
-// Geocoding (Address -> Lat/Long)
-const geocodeUrl =
-  "https://api.mapbox.com/geocoding/v5/mapbox.places/boston.json?access_token=pk.eyJ1IjoiY29tcGxleGFwaWNlbnN1c2FuZG1hcCIsImEiOiJjanh6ZnBlYWEwMmptM2RvYW02ZTIwODk0In0.m4zyrwu_-34qVZNFVbKtCQ&limit=1";
-request({ url: geocodeUrl, json: true }, (error, response) => {
-  if (error) {
-    console.log("Unable to connect to geocode location!");
-  } else if (response.body.features.length === 0) {
-    console.log("Unable to find location. Try another search.");
-  } else {
-    const latitude = response.body.features[0].center[1];
-    const longitude = response.body.features[0].center[0];
-    console.log(latitude, longitude);
-  }
+// // Geocoding (Address -> Lat/Long)
+// const geocodeUrl =
+//   "https://api.mapbox.com/geocoding/v5/mapbox.places/boston.json?access_token=pk.eyJ1IjoiY29tcGxleGFwaWNlbnN1c2FuZG1hcCIsImEiOiJjanh6ZnBlYWEwMmptM2RvYW02ZTIwODk0In0.m4zyrwu_-34qVZNFVbKtCQ&limit=1";
+// request({ url: geocodeUrl, json: true }, (error, response) => {
+//   if (error) {
+//     console.log("Unable to connect to geocode location!");
+//   } else if (response.body.features.length === 0) {
+//     console.log("Unable to find location. Try another search.");
+//   } else {
+//     const latitude = response.body.features[0].center[1];
+//     const longitude = response.body.features[0].center[0];
+//     console.log(latitude, longitude);
+//   }
+// });
+
+// geocode("Boston", (error, data) => {
+//   console.log("Error", error);
+//   console.log("Data", data);
+// });
+
+forecast(42.3601, -71.0589, (error, data) => {
+  console.log("Error", error);
+  console.log("Data", data);
 });
