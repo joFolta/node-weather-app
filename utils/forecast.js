@@ -11,7 +11,7 @@ const forecast = (latitude, longitude, callback) => {
     } else {
       callback(
         undefined,
-        `In ${response.body.location.name}, ${response.body.location.region} it is currently ${response.body.current.temperature} F. It feels like ${response.body.current.feelslike} F. `
+        `Temperature: ${response.body.current.temperature} F // Windspeed: ${response.body.current.wind_speed} // Rain: ${response.body.current.precip} %`
       );
     }
   });
